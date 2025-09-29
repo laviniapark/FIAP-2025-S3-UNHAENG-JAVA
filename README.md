@@ -118,6 +118,8 @@ Inicie o servidor:
 ```
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod;
 ```
+*A aplicação utiliza o profile prod para carregar as credenciais de banco e OAuth. Certifique-se de rodar sempre com o parâmetro ```-Dspring-boot.run.profiles=prod```*
+
 Acesse a aplicação (Copie a URL no navegador)
 
 http://localhost:8080

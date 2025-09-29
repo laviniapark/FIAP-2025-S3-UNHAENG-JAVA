@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Unhaeng Mottu</title>
+</head>
+<body class="min-h-screen flex flex-col">
+<header>
+    <nav class="navbar bg-base-300 shadow-sm z-50">
+        <div class="flex-1">
+            <a th:href="@{/}" class="btn btn-ghost text-xl">Unhaeng Mottu</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>🌎</summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 z-50">
+                            <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                            <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                                alt="avatar do usuário"
+                                th:src="${user.avatarUrl}" />
+                    </div>
+                </div>
+                <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between" th:text="${user.name}"></a>
+                    </li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="flex-1 px-8 py-8">
+    <form class="space-y-4" method="post" th:object="${filial}" th:action="*{filialId} != null ? @{/filiais/{id}(id=*{filialId})} : @{/filiais}">
+        <input type="hidden" name="_method" value="put" th:if="*{filialId} != null" />
+        <input type="hidden" th:field="*{filialId}" />
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.name}"></legend>
+            <input th:field="*{nome}" th:errorclass="input-error" type="text" placeholder="Filial Lins" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{nome}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" >CNPJ</legend>
+            <input th:field="*{cnpj}" th:errorclass="input-error" type="text" placeholder="12345678000199" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{cnpj}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.cep}"></legend>
+            <input th:field="*{endereco.cep}" th:errorclass="input-error" type="text" placeholder="12345678" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.cep}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.logradouro}"></legend>
+            <input th:field="*{endereco.logradouro}" th:errorclass="input-error" type="text" placeholder="Av. Lins de Vasconcelos" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.logradouro}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.numero}"></legend>
+            <input th:field="*{endereco.numero}" th:errorclass="input-error" type="text" placeholder="143" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.numero}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.complemento}"></legend>
+            <input th:field="*{endereco.complemento}" type="text" placeholder="Apto 90" class="input input-primary input-lg w-full px-10 py-3" />
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.cidade}"></legend>
+            <input th:field="*{endereco.cidade}" th:errorclass="input-error" type="text" placeholder="São Paulo" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.cidade}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.uf}"></legend>
+            <input th:field="*{endereco.uf}" th:errorclass="input-error" type="text" placeholder="SP" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.uf}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.pais}"></legend>
+            <input th:field="*{endereco.pais}" th:errorclass="input-error" type="text" placeholder="Brasil" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.pais}"></p>
+        </fieldset>
+
+        <div class="space-x-4">
+            <a href="/filiais" class="btn btn-neutral" th:text="#{cancel}"></a>
+            <button class="btn btn-primary" th:text="#{save}"></button>
+        </div>
+    </form>
+</main>
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <aside>
+        <p>Copyright © 2025 - All right reserved by Unhaeng</p>
+    </aside>
+</footer>
+</body>
+</html>

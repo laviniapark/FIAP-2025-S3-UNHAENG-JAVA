@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+<header>
+    <nav class="navbar bg-base-300 shadow-sm z-50">
+        <div class="flex-1">
+            <a th:href="@{/}" class="btn btn-ghost text-xl">Unhaeng Mottu</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>🌎</summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 z-50">
+                            <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                            <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                                alt="avatar do usuário"
+                                th:src="${user.avatarUrl}" />
+                    </div>
+                </div>
+                <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between" th:text="${user.name}"></a>
+                    </li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="flex-1 flex items-center justify-center">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-2">
+            <a class="btn btn-outline" th:href="@{'/revisions/history/' + ${canvas.canvasId}}" th:text="#{historico}"></a>
+
+            <div class="divider divider-horizontal"></div>
+
+            <button class="btn" id="btn-add-rect" th:text="#{add.rect}"></button>
+            <button class="btn" id="btn-add-line" th:text="#{add.line}"></button>
+
+            <div class="divider divider-horizontal"></div>
+
+            <button class="btn btn-primary" id="btn-save-revision" th:text="#{save.version}"></button>
+        </div>
+
+        <!-- Área do SVG -->
+        <div class="overflow-auto border rounded-xl p-4 bg-base-200">
+            <svg id="editor-svg"
+                 th:attr="width=${canvas.largura}, height=${canvas.altura}"
+                 xmlns="http://www.w3.org/2000/svg"
+                 th:style="'background-color:' + ${canvas.backgroundColor}">
+            </svg>
+        </div>
+    </div>
+</main>
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <aside>
+        <p>Copyright © 2025 - All right reserved by Unhaeng</p>
+    </aside>
+</footer>
+
+<!-- Dados do back pro JS -->
+<script th:inline="javascript">
+    const CANVAS_ID   = [[${canvas.canvasId}]];
+    const GRID_SIZE   = [[${canvas.gridSize}]];
+    const ELEMENTOS   = /*[[${elementos}]]*/ [];
+</script>
+<script src="/js/canvas-editor.js"></script>
+
+</body>
+</html>

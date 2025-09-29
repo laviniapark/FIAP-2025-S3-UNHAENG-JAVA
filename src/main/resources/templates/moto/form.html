@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Unhaeng Mottu</title>
+</head>
+<body class="min-h-screen flex flex-col">
+<header>
+    <nav class="navbar bg-base-300 shadow-sm z-50">
+        <div class="flex-1">
+            <a th:href="@{/}" class="btn btn-ghost text-xl">Unhaeng Mottu</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>🌎</summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 z-50">
+                            <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                            <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                                alt="avatar do usuário"
+                                th:src="${user.avatarUrl}" />
+                    </div>
+                </div>
+                <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between" th:text="${user.name}"></a>
+                    </li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="flex-1 px-8 py-8">
+    <form class="space-y-4" method="post" th:object="${moto}" th:action="*{motoId} != null ? @{/motos/{id}(id=*{motoId})} : @{/motos}">
+        <input type="hidden" name="_method" value="put" th:if="*{motoId} != null" />
+        <input type="hidden" th:field="*{motoId}" />
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{moto.placa}"></legend>
+            <input th:field="*{placa}" th:errorclass="input-error" type="text" placeholder="DKF2J83" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{placa}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{moto.marca}"></legend>
+            <input th:field="*{marca}" th:errorclass="input-error" type="text" placeholder="Honda" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{marca}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{moto.modelo}"></legend>
+            <input th:field="*{modelo}" th:errorclass="input-error" type="text" placeholder="CB 500F" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{modelo}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{moto.ano}"></legend>
+            <input th:field="*{ano}" th:errorclass="input-error" type="text" placeholder="2022" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{ano}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{moto.status}"></legend>
+            <select th:field="*{status}" class="select select-bordered w-full select-primary select-lg">
+                <option value="" disabled selected th:text="#{select.choose}"></option>
+                <option th:each="s : ${T(br.com.unhaeng.gestao_mottu.model.StatusEnum).values()}"
+                        th:value="${s}"
+                        th:text="#{${'status.' + s.name()}}">
+                </option>
+            </select>
+            <p class="label text-error" th:errors="*{status}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{moto.branch}"></legend>
+            <select th:field="*{filial.filialId}" class="select select-bordered w-full select-primary select-lg">
+                <option value="" disabled
+                        th:selected="*{filial} == null"
+                        th:text="#{select.choose}">
+                </option>
+
+                <option th:each="fi : ${filiais}" th:value="${fi.filialId}" th:text="${fi.nome + ' — ' + fi.cnpj}"></option>
+            </select>
+        </fieldset>
+
+
+        <div class="space-x-4">
+            <a href="/motos" class="btn btn-neutral" th:text="#{cancel}"></a>
+            <button class="btn btn-primary" th:text="#{save}"></button>
+        </div>
+    </form>
+</main>
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <aside>
+        <p>Copyright © 2025 - All right reserved by Unhaeng</p>
+    </aside>
+</footer>
+</body>
+</html>

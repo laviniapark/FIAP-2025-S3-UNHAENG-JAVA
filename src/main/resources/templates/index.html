@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Unhaeng Mottu</title>
+</head>
+<body class="min-h-screen flex flex-col">
+<header>
+    <nav class="navbar bg-base-300 shadow-sm z-50">
+        <div class="flex-1">
+            <a th:href="@{/}" class="btn btn-ghost text-xl">Unhaeng Mottu</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>🌎</summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 z-50">
+                            <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                            <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                                alt="avatar do usuário"
+                                th:src="${user.avatarUrl}" />
+                    </div>
+                </div>
+                <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between" th:text="${user.name}"></a>
+                    </li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="flex-1">
+    <div class="flex items-center justify-center">
+        <h1 class="text-6xl font-bold text-primary mt-10 mb-10" th:text="#{welcome}"></h1>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card bg-primary text-primary-content w-96 ml-20">
+            <div class="card-body">
+                <h2 class="card-title" th:text="#{branches}"></h2>
+                <p th:text="#{branches.message}"></p>
+                <div class="card-actions justify-end">
+                    <a th:href="@{/filiais}" class="btn" th:text="#{go}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-primary text-primary-content w-96 ml-20">
+            <div class="card-body">
+                <h2 class="card-title" th:text="#{motorcycles}"></h2>
+                <p th:text="#{motorcycles.message}"></p>
+                <div class="card-actions justify-end">
+                    <a th:href="@{/motos}" class="btn" th:text="#{go}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-primary text-primary-content w-96 ml-20">
+            <div class="card-body">
+                <h2 class="card-title" th:text="#{employees}"></h2>
+                <p th:text="#{employees.message}"></p>
+                <div class="card-actions justify-end">
+                    <a th:href="@{/funcionarios}" class="btn" th:text="#{go}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-base-100 bg-primary text-primary-content w-120 shadow-sm col-span-1 md:col-span-2 lg:col-span-3 mx-auto mb-10 mt-3">
+            <figure>
+                <img
+                        src="/img/mapa-modelo.png"
+                        alt="Mapa modelo do pátio" />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title flex items-center gap-2">
+                    <span th:text="#{create.svg}"></span>
+                    <span class="badge">DEMO</span>
+                </h2>
+                <p th:text="#{svg.details}"></p>
+                <div class="card-actions justify-end">
+                    <a th:href="@{/canvas}" class="btn" th:text="#{go}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <aside>
+        <p>Copyright © 2025 - All right reserved by Unhaeng</p>
+    </aside>
+</footer>
+</body>
+</html>

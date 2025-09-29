@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{rev.history}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+<header>
+    <nav class="navbar bg-base-300 shadow-sm z-50">
+        <div class="flex-1">
+            <a th:href="@{/}" class="btn btn-ghost text-xl">Unhaeng Mottu</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>🌎</summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 z-50">
+                            <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                            <li><a href="?lang=en_US">🇬🇧</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                                alt="user avatar"
+                                th:src="${#strings.defaultString(user?.avatarUrl, '/img/avatar.svg')}" />
+                    </div>
+                </div>
+                <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
+                    <li><a class="justify-between" th:text="${#strings.defaultString(user?.name, 'User')}"></a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="flex-1">
+    <div class="container mx-auto px-4 md:px-8 max-w-6xl mt-10">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-semibold" th:text="#{rev.history}"></h2>
+            <a class="btn" th:href="@{|/canvas/${canvasId}/edit|}" th:text="#{back.editor}"></a>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+            <div th:each="r : ${revisions}" class="card bg-base-200 shadow">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span th:text="#{revision.num}"></span>
+                        <span th:text="${r.revisionId}">ID</span>
+                    </h3>
+
+                    <p class="text-sm opacity-70">
+                        <span th:text="#{created.at}">Criada em:</span>
+                        <span th:text="${#temporals.format(r.createdAt, 'dd/MM/yyyy HH:mm:ss')}"></span>
+                    </p>
+
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary"
+                                th:attr="data-rev=${r.revisionId}"
+                                onclick="restoreRevision(this)"
+                                th:text="#{restore}"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <aside>
+        <p>Copyright © 2025 - All rights reserved by Unhaeng</p>
+    </aside>
+</footer>
+
+<script th:inline="javascript">
+    const CANVAS_ID   = [[${canvasId}]];
+    const CSRF_TOKEN  = document.querySelector('meta[name="_csrf]')?.content || document.querySelector('meta[name="_csrf"]')?.content;
+    const CSRF_HEADER = document.querySelector('meta[name="_csrf_header]')?.content || document.querySelector('meta[name="_csrf_header"]')?.content;
+
+    async function restoreRevision(btn){
+      const id = btn.getAttribute('data-rev');
+      const opts = { method: 'POST' };
+      if (CSRF_TOKEN && CSRF_HEADER) {
+        opts.headers = { [CSRF_HEADER]: CSRF_TOKEN };
+      }
+      const res = await fetch(`/revisions/${id}/restore`, opts);
+      if (res.ok){
+        alert('Revisão restaurada! Nova versão criada.');
+        window.location.href = `/canvas/${CANVAS_ID}/edit`;
+      } else {
+        alert('Erro ao restaurar.');
+      }
+    }
+</script>
+
+</body>
+</html>

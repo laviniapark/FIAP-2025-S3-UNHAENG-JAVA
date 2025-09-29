@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Unhaeng Mottu</title>
+</head>
+<body class="min-h-screen flex flex-col">
+<header>
+    <nav class="navbar bg-base-300 shadow-sm z-50">
+        <div class="flex-1">
+            <a th:href="@{/}" class="btn btn-ghost text-xl">Unhaeng Mottu</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li>
+                    <details>
+                        <summary>🌎</summary>
+                        <ul class="bg-base-100 rounded-t-none p-2 z-50">
+                            <li><a href="?lang=pt_BR">🇧🇷</a></li>
+                            <li><a href="?lang=en_US">🏴󠁧󠁢󠁥󠁮󠁧󠁿</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                                alt="avatar do usuário"
+                                th:src="${user.avatarUrl}" />
+                    </div>
+                </div>
+                <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between" th:text="${user.name}"></a>
+                    </li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="flex-1">
+    <div class="flex items-center justify-center">
+        <h1 class="text-3xl font-bold text-primary mt-5" th:text="#{branches}"></h1>
+    </div>
+    <div>
+        <a th:href="@{/filiais/form}" class="btn btn-primary m-5" th:text="#{create.new}"></a>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th th:text="#{filial.name}"></th>
+                <th>CNPJ</th>
+                <th th:text="#{filial.active}"></th>
+                <th th:text="#{filial.cep}"></th>
+                <th th:text="#{filial.logradouro}"></th>
+                <th th:text="#{filial.numero}"></th>
+                <th th:text="#{filial.complemento}"></th>
+                <th th:text="#{filial.cidade}"></th>
+                <th th:text="#{filial.uf}"></th>
+                <th th:text="#{filial.pais}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="filial, iterStat : ${filiais}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td th:text="${filial.nome}"></td>
+                <td th:text="${filial.cnpj}"></td>
+                <td>
+                    <span th:text="${filial.active} ? #{boolean.true} : #{boolean.false}"></span>
+                </td>
+                <td th:text="${filial.endereco.cep}"></td>
+                <td th:text="${filial.endereco.logradouro}"></td>
+                <td th:text="${filial.endereco.numero}"></td>
+                <td th:text="${filial.endereco.complemento}"></td>
+                <td th:text="${filial.endereco.cidade}"></td>
+                <td th:text="${filial.endereco.uf}"></td>
+                <td th:text="${filial.endereco.pais}"></td>
+                <td class="text-right">
+                    <div class="dropdown dropdown-end">
+                        <button tabindex="0" class="btn btn-ghost btn-circle btn-sm">
+                            <!-- ícone “...” -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M6 12h.01M12 12h.01M18 12h.01" />
+                            </svg>
+                        </button>
+
+                        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow">
+                            <!-- Editar -->
+                            <li>
+                                <a th:href="@{|/filiais/${filial.filialId}/edit|}" th:text="#{update}"></a>
+                            </li>
+
+                            <!-- DELETE -->
+                            <li>
+                                <form th:action="@{|/filiais/${filial.filialId}|}" method="post"
+                                      th:onsubmit="|return confirm('#{confirm.deactivate}');|">
+                                    <input type="hidden" name="_method" value="delete"/>
+                                    <button type="submit" class="text-error" th:text="#{delete}"></button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(filiais)}">
+                <td colspan="2" class="text-center text-gray-500" th:text="#{filial.empty}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <aside>
+        <p>Copyright © 2025 - All right reserved by Unhaeng</p>
+    </aside>
+</footer>
+</body>
+</html>

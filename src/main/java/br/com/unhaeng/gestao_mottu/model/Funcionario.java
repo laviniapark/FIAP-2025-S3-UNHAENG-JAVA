@@ -1,6 +1,5 @@
-package br.com.unhaeng.gestao_mottu.funcionario;
+package br.com.unhaeng.gestao_mottu.model;
 
-import br.com.unhaeng.gestao_mottu.filial.Filial;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -13,21 +12,23 @@ import lombok.*;
 public class Funcionario {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="funcionario_id")
+    private Long funcionarioId;
 
-    @NotBlank
+    @NotBlank(message = "{funcionario.nome.notblank}")
     private String nomeCompleto;
 
-    @NotBlank
+    @NotBlank(message = "{funcionario.cpf.notblank}")
+    @Size(min=11, max=11, message = "{funcionario.cpf.size}")
     private String cpf;
 
-    @NotNull
+    @NotNull(message = "{funcionario.cargo.notnull}")
+    @Enumerated(EnumType.STRING)
     private CargoEnum cargo;
 
-    @NotNull
     private boolean isActive= true;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "filial_id")
     private Filial filial;
 

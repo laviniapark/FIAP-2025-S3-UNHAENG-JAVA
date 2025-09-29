@@ -1,4 +1,4 @@
-package br.com.unhaeng.gestao_mottu.moto;
+package br.com.unhaeng.gestao_mottu.model;
 
 public enum StatusEnum {
 

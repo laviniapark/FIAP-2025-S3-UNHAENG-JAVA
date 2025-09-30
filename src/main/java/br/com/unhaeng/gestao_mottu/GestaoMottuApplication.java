@@ -8,11 +8,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class GestaoMottuApplication extends SpringBootServletInitializer {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(GestaoMottuApplication.class);
-    }
-
 	public static void main(String[] args) {
 		SpringApplication.run(GestaoMottuApplication.class, args);
 	}

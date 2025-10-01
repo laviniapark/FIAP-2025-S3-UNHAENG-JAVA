@@ -142,7 +142,11 @@ mvn clean install
 ```
 Inicie o servidor:
 ```
+# GITBASH / ZSH
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod;
+
+#POWERSHELL
+$env:SPRING_PROFILES_ACTIVE="prod"; ./mvnw spring-boot:run
 ```
 *A aplicação utiliza o profile prod para carregar as credenciais de banco e OAuth. Certifique-se de rodar sempre com o parâmetro ```-Dspring-boot.run.profiles=prod```*
 

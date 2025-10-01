@@ -79,6 +79,11 @@
             <input th:field="*{endereco.complemento}" type="text" placeholder="Apto 90" class="input input-primary input-lg w-full px-10 py-3" />
         </fieldset>
         <fieldset class="fieldset">
+            <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.bairro}"></legend>
+            <input th:field="*{endereco.bairro}" th:errorclass="input-error" type="text" placeholder="Vila Mariana" class="input input-primary input-lg w-full px-10 py-3" />
+            <p class="label text-error " th:errors="*{endereco.bairro}"></p>
+        </fieldset>
+        <fieldset class="fieldset">
             <legend class="fieldset-legend text-lg ml-10" th:text="#{filial.cidade}"></legend>
             <input th:field="*{endereco.cidade}" th:errorclass="input-error" type="text" placeholder="São Paulo" class="input input-primary input-lg w-full px-10 py-3" />
             <p class="label text-error " th:errors="*{endereco.cidade}"></p>

@@ -24,6 +24,7 @@ RM555679 - Lavinia Soo Hyun Park
 - Integração com SQL Server via Spring Data JPA
 - Autenticação com Google e GitHub usando Spring Security OAuth2
 - Relacionamentos entre entidades (ex.: motos vinculadas a uma filial, funcionário associado a filial)
+- Demonstração demo de criação de SVG do pátio
 
 ## Como Rodar o Projeto
 

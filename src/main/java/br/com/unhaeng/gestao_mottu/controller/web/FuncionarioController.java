@@ -1,7 +1,6 @@
-package br.com.unhaeng.gestao_mottu.controller;
+package br.com.unhaeng.gestao_mottu.controller.web;
 
 import br.com.unhaeng.gestao_mottu.config.MessageHelper;
-import br.com.unhaeng.gestao_mottu.model.Filial;
 import br.com.unhaeng.gestao_mottu.model.Funcionario;
 import br.com.unhaeng.gestao_mottu.service.FilialService;
 import br.com.unhaeng.gestao_mottu.service.FuncionarioService;
@@ -12,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/funcionarios")

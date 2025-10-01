@@ -1,4 +1,4 @@
-package br.com.unhaeng.gestao_mottu.controller;
+package br.com.unhaeng.gestao_mottu.controller.web;
 
 import br.com.unhaeng.gestao_mottu.dto.RevisionDTO;
 import br.com.unhaeng.gestao_mottu.service.RevisionService;

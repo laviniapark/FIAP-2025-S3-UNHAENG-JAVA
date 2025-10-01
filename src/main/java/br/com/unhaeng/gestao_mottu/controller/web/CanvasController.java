@@ -1,13 +1,11 @@
-package br.com.unhaeng.gestao_mottu.controller;
+package br.com.unhaeng.gestao_mottu.controller.web;
 
 import br.com.unhaeng.gestao_mottu.config.MessageHelper;
 import br.com.unhaeng.gestao_mottu.dto.CanvasDTO;
-import br.com.unhaeng.gestao_mottu.dto.ElementoDTO;
 import br.com.unhaeng.gestao_mottu.service.CanvasService;
 import br.com.unhaeng.gestao_mottu.service.ElementoService;
 import br.com.unhaeng.gestao_mottu.service.FilialService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -39,7 +39,32 @@ Primeiro, prepare o seu Banco de Dados. Você tem duas opções:
 
 **OPÇÃO A - Criar seu Azure SQL Database**
 
-Acesse o tutorial do site oficial da Microsoft (https://learn.microsoft.com/pt-br/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-cli)
+1. Acesse o [Portal Azure](https://portal.azure.com/#home)
+2. Abra o Cloudshell
+3. Rode os seguintes comandos:
+```
+az group create --name rg-unhaeng-bcosql --location brazilsouth
+```
+```
+az sql server create \
+-l brazilsouth -g rg-unhaeng-bcosql -n sqlserver-unhaeng \
+-u USERNAME -p PASSWORD \
+--enable-public-network true
+```
+***Mude os campos "USERNAME" e "PASSWORD" pelos dados que você deseja***
+
+***A senha deve conter: letra maiuscula, letra minuscula, numero e caractere especial (opte por usar "!")***
+```
+az sql db create \
+-g rg-unhaeng-bcosql -s sqlserver-unhaeng -n unhaengdb \
+--service-objective Free --backup-storage-redundancy Local \
+--zone-redundant false
+```
+```
+az sql server firewall-rule create \
+-g rg-unhaeng-bcosql -s sqlserver-unhaeng -n AllowAll \
+--start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
+```
 
 **OPÇÃO B - Rodar Localmente usando Docker**
 

@@ -9,6 +9,7 @@ CREATE TABLE T_FILIAIS (
   logradouro      VARCHAR(150)     NOT NULL,
   numero          VARCHAR(20)      NOT NULL,
   complemento     VARCHAR(120)     NULL,
+  bairro          VARCHAR(120)     NOT NULL,
   cidade          VARCHAR(80)      NOT NULL,
   uf              CHAR(2)          NOT NULL,
   pais            VARCHAR(80)      NOT NULL

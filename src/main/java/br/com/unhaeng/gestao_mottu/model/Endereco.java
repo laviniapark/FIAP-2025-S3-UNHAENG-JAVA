@@ -20,6 +20,9 @@ public class Endereco {
 
     private String complemento;
 
+    @NotBlank(message = "{endereco.bairro.notblank}")
+    private String bairro;
+
     @NotBlank(message = "{endereco.cidade.notblank}")
     private String cidade;
 

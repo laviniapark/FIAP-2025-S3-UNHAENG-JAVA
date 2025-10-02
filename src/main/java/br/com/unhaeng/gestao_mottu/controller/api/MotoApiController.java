@@ -3,6 +3,7 @@ package br.com.unhaeng.gestao_mottu.controller.api;
 import br.com.unhaeng.gestao_mottu.model.Moto;
 import br.com.unhaeng.gestao_mottu.service.MotoService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/motos")
+@RequiredArgsConstructor
 public class MotoApiController {
 
-    private MotoService service;
+    private final MotoService service;
 
     @GetMapping
     public ResponseEntity<List<Moto>> listAll() {

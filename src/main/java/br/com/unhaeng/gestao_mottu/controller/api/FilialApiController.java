@@ -3,6 +3,7 @@ package br.com.unhaeng.gestao_mottu.controller.api;
 import br.com.unhaeng.gestao_mottu.model.Filial;
 import br.com.unhaeng.gestao_mottu.service.FilialService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/filiais")
+@RequiredArgsConstructor
 public class FilialApiController {
 
-    private FilialService service;
+    private final FilialService service;
 
     @GetMapping
     public ResponseEntity<List<Filial>> listAll() {
